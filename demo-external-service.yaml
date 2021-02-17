@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-external-service
+spec:
+  # 依靠外部指定 endpoint 的服务没有 selector 项
+  ports:
+    - port: 80

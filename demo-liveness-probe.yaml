@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: k8s-node-demo-unhealth-pod
+spec:
+  containers:
+  - image: k8s-node-demo-unhealth-image
+    imagePullPolicy: Never
+    name: k8s-node-demo-unhealth-container
+    livenessProbe:
+      httpGet:
+        path: /
+        port: 8080
+      initialDelaySeconds: 15

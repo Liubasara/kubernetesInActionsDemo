@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-external-name-type-service
+spec:
+  type: ExternalName
+  externalName: www.baidu.com
+  ports:
+    - port: 80

@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: demo-onetime-job
+spec:
+  # 设定执行数量
+  # completions: 7
+  parallelism: 3
+  template:
+    metadata:
+      name: demo-one-time-job-pod
+      labels:
+        apps: demo-one-time-job-label
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: demo-one-time-job-container
+        imagePullPolicy: Never
+        image: k8s-onetime-echo-demo-image

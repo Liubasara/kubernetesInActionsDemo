@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: demo-readiness-probe-replication-controller
+spec:
+  replicas: 3
+  selector:
+    app: demo-readiness-probe-replication-controller-label
+  template:
+    metadata:
+      name: demo-readiness-probe-replication-controller-pod
+      labels:
+        app: demo-readiness-probe-replication-controller-label
+    spec:
+      containers:
+      - image: k8s-node-demo-image
+        imagePullPolicy: Never
+        name: demo-readiness-probe-replication-controller-pod-container
+        ports:
+        - name: http
+          containerPort: 8080
+        - name: https
+          containerPort: 8443
+        readinessProbe:
+          exec:
+            command:
+            - ls
+            - /var/ready

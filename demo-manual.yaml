@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: k8s-custom-node-demo-pod
+  annotations:
+    demo/myDemo: "foo-bar"
+spec:
+  nodeSelector:
+    gpu: "true"
+  containers:
+  - image: k8s-node-demo-image
+    name: k8s-custom-node-demo-container
+    imagePullPolicy: Never
+    ports:
+    - containerPort: 8080
+      protocol: TCP

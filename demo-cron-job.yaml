@@ -1,0 +1,18 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: demo-cron-job
+spec:
+  schedule: "0,15,30,45 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: demo-cron-job-label
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: demo-cron-job-container
+            imagePullPolicy: Never
+            image: k8s-onetime-echo-demo-image

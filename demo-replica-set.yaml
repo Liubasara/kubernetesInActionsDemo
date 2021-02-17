@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: k8s-node-demo-replica-set
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: k8s-node-demo-replica-set-label
+  template:
+    metadata:
+      name: k8s-node-demo-replica-set-pod
+      labels:
+        app: k8s-node-demo-replica-set-label
+    spec:
+      containers:
+      - name: k8s-node-demo-replica-set-container
+        image: k8s-node-demo-image
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8080

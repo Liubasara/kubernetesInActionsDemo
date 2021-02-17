@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: demo-fortune-input-env-pod
+spec:
+  containers:
+  - image: fortune-input-demo-image:env
+    imagePullPolicy: Never
+    # 设置环境变量
+    env:
+    - name: INTERVAL
+      valueFrom:
+        configMapKeyRef:
+          name: fortune-config
+          key: sleep-interval
+    name: html-generator
+    volumeMounts:
+    - name: html
+      mountPath: /var/htdocs
+  - image: nginx:alpine
+    imagePullPolicy: Never
+    name: web-server
+    volumeMounts:
+    - name: html
+      mountPath: /usr/share/nginx/html
+      readOnly: true
+    ports:
+    - name: http
+      containerPort: 80
+      protocol: TCP
+  volumes:
+  - name: html
+    emptyDir: {}

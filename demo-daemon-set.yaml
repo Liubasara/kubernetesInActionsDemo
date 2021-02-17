@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: demo-daemon-set
+spec:
+  selector:
+    matchLabels:
+      app: demo-daemon-set-label
+  template:
+    metadata:
+      name: demo-daemon-set-pod
+      labels:
+        app: demo-daemon-set-label
+    spec:
+      nodeSelector:
+        disk: ssd
+      containers:
+      - name: demo-daemon-set-container
+        image: k8s-node-demo-image
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8080
