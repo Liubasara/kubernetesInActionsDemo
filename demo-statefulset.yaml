@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: demo-statefulset
+spec:
+  # 定义 Stateful 的对象中有一个 serviceName 字段来告诉 Stateful 控制器使用具体的 service 来解析它所管理的Pod的IP地址
+  # 指定用于查询 pod dns IP 地址的 headless service 
+  serviceName: demo-statefulset-headless-service
+  replicas: 2
+  selector:
+    matchLabels:
+      app: demo-statefulset-pod-label
+  # StatefulSet 特有，每个 pod 将会创建的持久卷声明 
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      resources:
+        requests:
+          storage: 1Mi
+      accessModes:
+      - ReadWriteOnce
+  template:
+    metadata:
+      labels:
+        app: demo-statefulset-pod-label
+    spec:
+      containers:
+      - name: demo-statefulset-pod
+        imagePullPolicy: Never
+        image: demo-statefulset-node-image
+        ports:
+        - name: http
+          containerPort: 8080
+        volumeMounts:
+        - name: data
+          mountPath: /var/data
+
